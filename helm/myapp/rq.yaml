@@ -1,0 +1,15 @@
+# we can enabled the RQ at namespace level
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: myrq
+  namespace: rq-example
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "10"
+    services: "5"
+    persistentVolumeClaim: "3"

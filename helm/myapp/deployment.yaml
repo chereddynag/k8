@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+ 
+      containers:
+      - name: myapp
+        image: httpd:latest
+        securityContext:
+          privileged: false
+          runAsUser: 1000            
+          capabilities:
+            drop:
+              - ALL
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "150m"
+        ports:
+        - containerPort: 80
+        # env:
+        #   - name: VAR1
+        #     valueFrom:
+        #       configMapKeyRef:
+        #         name: myenvcfg
+        #         key: color1 
+          # - name: VAR2
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: myenvcfg
+          #       key: color2
+      #   volumeMounts:
+      #     - mountPath: /usr/local/apache2/htdocs
+      #       name: conf
+        
+      # volumes:
+      # - name: conf
+      #   configMap:
+      #     name: mycfg
+      #     items: 
+      #     - key: my-index.html
+      #       path: index.html
+          
